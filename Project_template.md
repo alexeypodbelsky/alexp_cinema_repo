@@ -4,8 +4,55 @@
 
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
 Результат представьте в виде контейнерной диаграммы в нотации С4.
-Добавьте ссылку на файл в этот шаблон
-[ссылка на файл](ссылка)
+
+**Диаграмма контейнеров ([С4_Containers](diagrams\C4_Containers))**
+
+```puml
+
+@startuml
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_LEFT_RIGHT()
+
+' Границы
+System_Boundary(c1, "КиноБездна") {
+
+    ContainerDb(db, "База данных", "PostgreSQL", "Данные о пользователях, фильмах, платежах и т.д.")
+    Container(api, "API Gateway", "Python", "Единая точка входа для всех клиентов")
+    Container(movies, "Movie Service", "Go", "Управление метаданными фильмов")
+    Container(events, "Events Service", "Python", "Обработка событий (Producer/Consumer) с использованием Kafka")
+    Container(monolith, "Monolith", "Go", "Монолит")
+    Container(kafka, "Kafka", "Очередь сообщений", "Шина сообщений для асинхронного взаимодействия")
+
+}
+
+' Связи
+Rel(api, movies, "Использует", "REST")
+Rel(api, monolith, "Использует", "REST")
+Rel(api, events, "Отправляет события", "REST")
+
+Rel(movies, db, "Читает/Записывает", "SQL")
+Rel(monolith, db, "Читает/Записывает", "SQL")
+
+Rel(events, kafka, "Производит", "Kafka Producer")
+Rel(events, kafka, "Потребляет", "Kafka Consumer")
+
+
+'Внешние элементы
+Person(user, "Пользователь", "Использует систему через различные устройства")
+System_Ext(ext_system, "Рекомендательная система", "Предоставляет рекомендации")
+
+'Взаимодействие с внешними элементами
+Rel(user, api, "Использует", "REST")
+Rel(ext_system, kafka, "Производит", "Kafka Producer")
+Rel(ext_system, kafka, "Потребляет", "Kafka Consumer")
+
+@enduml
+
+
+```
+
 
 # Задание 2
 
