@@ -6,6 +6,7 @@ import asyncio
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
+import threading
 from pydantic import BaseModel
 
 from kafka import KafkaProducer, KafkaConsumer
@@ -129,6 +130,14 @@ async def consume_messages():
             print("Received message:", message.topic, message.value)
     except Exception as e:
         print(f"Error during consumption: {e}")
+
+
+@app.on_event("startup")
+async def startup_event():
+    # Запуск потребителя в отдельном потоке
+    threading.Thread(
+        target=asyncio.run, args=(consume_messages(),), daemon=True
+    ).start()
 
 
 if __name__ == "__main__":

@@ -104,7 +104,15 @@ Rel(ext_system, kafka, "Потребляет", "Kafka Consumer")
     - Добавьте в docker-compose новый сервис, kafka там уже есть
 
 Необходимые тесты для проверки этого API вызываются при запуске npm run test:local из папки tests/postman 
-Приложите скриншот тестов и скриншот состояния топиков Kafka из UI http://localhost:8090 
+Приложите скриншот тестов и скриншот состояния топиков Kafka из UI http://localhost:8090
+
+Результат:
+
+- *Все топики:* screens/topics.png
+- *Топик movie-events:* screens/topic movie-events.png
+- *Топик payment-events:* screens/topic payment-events.png
+- *Топик user-events:* screens/topic user-events.png
+- *Тесты:* screens/tests.png
 
 # Задание 3
 
