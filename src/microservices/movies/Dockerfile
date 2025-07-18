@@ -28,4 +28,4 @@ COPY --from=builder /app/movies-service .
 EXPOSE 8081
 
 # Command to run the executable
-CMD ["./movies-service"]
+CMD ["/bin/sh", "-c", "sleep 5 && ./movies-service"]
