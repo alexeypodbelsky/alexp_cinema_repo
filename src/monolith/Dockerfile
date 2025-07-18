@@ -28,4 +28,4 @@ COPY --from=builder /app/monolith .
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["./monolith"]
+CMD ["/bin/sh", "-c", "sleep 5 && ./monolith"]
