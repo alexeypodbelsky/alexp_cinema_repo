@@ -19,7 +19,7 @@ spec:
       - name: proxy-service
         image: ghcr.io/alexeypodbelsky/alexp_cinema_repo/proxy-service:latest
         ports:
-        - containerPort: 8083 # Порт, на котором работает proxy-service
+        - containerPort: 8000 # Порт, на котором работает proxy-service
         env:
         - name: MONOLITH_URL
           value: "http://monolith:8080" 
@@ -43,6 +43,6 @@ spec:
   selector:
     app: proxy-service
   ports:
-  - port: 8083 # Порт, через который будем обращаться к прокси
-    targetPort: 8083 # Порт, на котором слушает контейнер proxy-service
+  - port: 8000 # Порт, через который будем обращаться к прокси
+    targetPort: 8000 # Порт, на котором слушает контейнер proxy-service
   type: ClusterIP #  Делает сервис доступным только внутри кластера
