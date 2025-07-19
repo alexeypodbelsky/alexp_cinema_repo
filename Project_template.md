@@ -332,11 +332,11 @@ cat .docker/config.json | base64
 
 Результаты:
 
-- скриншот вывода при вызове https://cinemaabyss.example.com/api/movies: /screens/task3_movies_request.png
+- скриншот вывода при вызове https://cinemaabyss.example.com/api/movies: [screens/task3_movies_request.png](screens/task3_movies_request.png)
 
-- скриншот вывода event-service после вызова тестов: /screens/task3_events-service.png
+- скриншот вывода event-service после вызова тестов: [screens/task3_events-service.png](screens/task3_events-service.png)
 
-- скриншот вывода результатов тестов postman: /screens/task3_postman_tests_result.png
+- скриншот вывода результатов тестов postman: [screens/task3_postman_tests_result.png](screens/task3_postman_tests_result.png)
 
 
 
@@ -413,6 +413,12 @@ minikube tunnel
 Потом вызовите 
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
+
+Результат:
+
+- Скриншот развертывания helm: [screens/task4_helm.png](screens/task4_helm.png)
+
+- Скриншот вывода https://cinemaabyss.example.com/api/movies: [screens/task4_movies.png](screens/task4_movies.png)
 
 ## Удаляем все
 
