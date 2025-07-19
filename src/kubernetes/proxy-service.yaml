@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-service
+  namespace: cinemaabyss
+  labels:
+    app: proxy-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy-service
+  template:
+    metadata:
+      labels:
+        app: proxy-service
+    spec:
+      containers:
+      - name: proxy-service
+        image: ghcr.io/alexeypodbelsky/alexp_cinema_repo/proxy-service:latest
+        ports:
+        - containerPort: 8083 # Порт, на котором работает proxy-service
+        env:
+        - name: MONOLITH_URL
+          value: "http://monolith:8080" 
+        - name: MOVIES_SERVICE_URL
+          value: "http://movies-service:8081"
+        - name: MOVIES_MIGRATION_PERCENT
+          valueFrom:
+            configMapKeyRef:
+              name: cinemaabyss-config
+              key: MOVIES_MIGRATION_PERCENT
+
+      imagePullSecrets:
+        - name: dockerconfigjson
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-service
+  namespace: cinemaabyss
+spec:
+  selector:
+    app: proxy-service
+  ports:
+  - port: 8083 # Порт, через который будем обращаться к прокси
+    targetPort: 8083 # Порт, на котором слушает контейнер proxy-service
+  type: ClusterIP #  Делает сервис доступным только внутри кластера
