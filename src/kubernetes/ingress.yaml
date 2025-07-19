@@ -11,9 +11,81 @@ spec:
     - host: cinemaabyss.example.com
       http:
         paths:
-          #дополните конфигурацию для /
-          ...
-          - path: /api/events
+          # Monolith Service
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: monolith
+                port:
+                  number: 8080
+
+          - path: /api/users
+            pathType: Prefix
+            backend:
+              service:
+                name: proxy-service
+                port:
+                  number: 8083
+
+          - path: /api/movies
+            pathType: Prefix
+            backend:
+              service:
+                name: proxy-service
+                port:
+                  number: 8083
+                  
+          - path: /api/movies/health
+            pathType: Prefix
+            backend:
+              service:
+                name: movies-service
+                port:
+                  number: 8081
+
+          - path: /api/payments
+            pathType: Prefix
+            backend:
+              service:
+                name: monolith
+                port:
+                  number: 8080
+
+          - path: /api/subscriptions
+            pathType: Prefix
+            backend:
+              service:
+                name: monolith
+                port:
+                  number: 8080
+
+          # Events Microservice
+          - path: /api/events/movie
+            pathType: Prefix
+            backend:
+              service:
+                name: events-service
+                port:
+                  number: 8082
+
+          - path: /api/events/user
+            pathType: Prefix
+            backend:
+              service:
+                name: events-service
+                port:
+                  number: 8082
+
+          - path: /api/events/payment
+            pathType: Prefix
+            backend:
+              service:
+                name: events-service
+                port:
+                  number: 8082
+
+          - path: /api/events/health
             pathType: Prefix
             backend:
               service:
