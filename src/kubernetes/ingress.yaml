@@ -26,7 +26,7 @@ spec:
               service:
                 name: proxy-service
                 port:
-                  number: 8083
+                  number: 8000
 
           - path: /api/movies
             pathType: Prefix
@@ -34,7 +34,7 @@ spec:
               service:
                 name: proxy-service
                 port:
-                  number: 8083
+                  number: 8000
                   
           - path: /api/movies/health
             pathType: Prefix
